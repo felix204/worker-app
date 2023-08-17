@@ -6,28 +6,34 @@ import ErrorModal from "../UI/ErrorModal";
 const AddWorker = (props) => {
   const [enteredWorkerName, setEnteredWorkerName] = useState("");
   const [enteredWage, setEnteredWage] = useState("");
+  const [error, setError] = useState();
 
   const minwage = 5000;
 
   const addWorkerHandler = (e) => {
     e.preventDefault();
-    
-    if (
-      enteredWorkerName.trim().length === 0 ||
-      enteredWage.trim().length === 0
-    ) {
+
+    if (enteredWorkerName.trim().length === 0) {
+      setError({
+        title: "İsim Alanı Zorunludur",
+        message: "Lütfen Bir İsim Giriniz",
+      });
       return;
     }
 
     if (+enteredWage < minwage) {
+      setError({
+        title: "Maaş Alanı Zorunludur",
+        message: `Lütfen ${minwage} Üstünde Bir Değer Giriniz.`,
+      });
       return;
     }
-    
+
     props.setWorkers((prevState) => [
       {
-        id: Math.floor(Math.random() *1000),
+        id: Math.floor(Math.random() * 1000),
         name: enteredWorkerName,
-        wage: enteredWage
+        wage: enteredWage,
       },
       ...prevState,
     ]);
@@ -35,9 +41,13 @@ const AddWorker = (props) => {
     setEnteredWage("");
   };
 
+  const errorHandler = () => {
+    setError(null);
+  };
+
   return (
     <div>
-      <ErrorModal />
+      {error && <ErrorModal onConfirm={errorHandler} error={error} />}
       <Card className="mt-10">
         <form className="flex flex-col gap-y-2" onSubmit={addWorkerHandler}>
           <label htmlFor="name" className="font-medium">
