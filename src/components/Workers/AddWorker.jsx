@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../UI/Button";
 import Card from "../UI/Card";
+import ErrorModal from "../UI/ErrorModal";
 
 const AddWorker = (props) => {
   const [enteredWorkerName, setEnteredWorkerName] = useState("");
@@ -17,7 +18,7 @@ const AddWorker = (props) => {
     ) {
       return;
     }
-    
+
     if (+enteredWage < minwage) {
       return;
     }
@@ -36,6 +37,7 @@ const AddWorker = (props) => {
 
   return (
     <div>
+      <ErrorModal />
       <Card className="mt-10">
         <form className="flex flex-col gap-y-2" onSubmit={addWorkerHandler}>
           <label htmlFor="name" className="font-medium">

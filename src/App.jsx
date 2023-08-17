@@ -9,6 +9,7 @@ function App() {
   return (
     <div className="App bg">
       <header className="App-header">
+        
         <AddWorker setWorkers={setWorkers}/>
         <WorkerList workers={workers} setWorkers={setWorkers}/>
       </header>
