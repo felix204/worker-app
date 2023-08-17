@@ -1,3 +1,4 @@
+import Wrapper from "../Helper/Wrapper";
 import Card from "../UI/Card";
 
 const WorkerList = (props) => {
@@ -12,8 +13,7 @@ const WorkerList = (props) => {
   }
 
   return (
-    <div>
-      
+    <Wrapper>
       <Card className="mt-5">
         <ul>
           <li className="flex justify-between">
@@ -32,7 +32,7 @@ const WorkerList = (props) => {
           ))}
         </ul>
       </Card>
-    </div>
+    </Wrapper>
   );
 };
 
