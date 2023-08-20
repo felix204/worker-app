@@ -1,19 +1,21 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Button from "../UI/Button";
 import Card from "../UI/Card";
 import ErrorModal from "../UI/ErrorModal";
 
 const AddWorker = (props) => {
-  const [enteredWorkerName, setEnteredWorkerName] = useState("");
   const [enteredWage, setEnteredWage] = useState("");
   const [error, setError] = useState();
+
+  const useRefName = useRef();
+
 
   const minwage = 5000;
 
   const addWorkerHandler = (e) => {
     e.preventDefault();
 
-    if (enteredWorkerName.trim().length === 0) {
+    if (useRefName.current.value.trim().length === 0) {
       setError({
         title: "İsim Alanı Zorunludur",
         message: "Lütfen Bir İsim Giriniz",
@@ -32,15 +34,14 @@ const AddWorker = (props) => {
     props.setWorkers((prevState) => [
       {
         id: Math.floor(Math.random() * 1000),
-        name: enteredWorkerName,
+        name: useRefName.current.value,
         wage: enteredWage,
       },
       ...prevState,
     ]);
-    setEnteredWorkerName("");
+    useRefName.current.value = "";
     setEnteredWage("");
   };
-
   const errorHandler = () => {
     setError(null);
   };
@@ -58,8 +59,7 @@ const AddWorker = (props) => {
             className="max-w-[40rem] w-full mx-auto border p-2"
             placeholder="Çalışan İsmi Giriniz"
             id="name"
-            onChange={(e) => setEnteredWorkerName(e.target.value)}
-            value={enteredWorkerName}
+            ref={useRefName}
           />
           <label htmlFor="wage">Maaş Miktarı</label>
           <input
