@@ -7,7 +7,7 @@ const AddWorker = (props) => {
   const [enteredWage, setEnteredWage] = useState("");
   const [error, setError] = useState();
 
-  const useRefName = useRef();
+  const useRefWorkerName = useRef();
 
 
   const minwage = 5000;
@@ -15,7 +15,7 @@ const AddWorker = (props) => {
   const addWorkerHandler = (e) => {
     e.preventDefault();
 
-    if (useRefName.current.value.trim().length === 0) {
+    if (useRefWorkerName.current.value.trim().length === 0) {
       setError({
         title: "İsim Alanı Zorunludur",
         message: "Lütfen Bir İsim Giriniz",
@@ -34,12 +34,12 @@ const AddWorker = (props) => {
     props.setWorkers((prevState) => [
       {
         id: Math.floor(Math.random() * 1000),
-        name: useRefName.current.value,
+        name: useRefWorkerName.current.value,
         wage: enteredWage,
       },
       ...prevState,
     ]);
-    useRefName.current.value = "";
+    useRefWorkerName.current.value = "";
     setEnteredWage("");
   };
   const errorHandler = () => {
@@ -59,7 +59,7 @@ const AddWorker = (props) => {
             className="max-w-[40rem] w-full mx-auto border p-2"
             placeholder="Çalışan İsmi Giriniz"
             id="name"
-            ref={useRefName}
+            ref={useRefWorkerName}
           />
           <label htmlFor="wage">Maaş Miktarı</label>
           <input
